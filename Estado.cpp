@@ -29,7 +29,7 @@ Estado::Estado (const Estado& estado):
 	idEstado_(estado.idEstado_){}
 
 
-~Estado::Estado (){}
+Estado::~Estado (){}
 
 
 int Estado::getIdEstado () const
@@ -47,14 +47,14 @@ std::set<Transicion> Estado::getTransiciones () const
 //estado.
 void Estado::insertTransiciones (Transicion transicion)
 {
-	transciones_.insert(transicion);
+	transiciones_.insert(transicion);
 }
 
 
-int Estdo::operator< (const Estado& estado) const
+int Estado::operator< (const Estado& estado) const
 {
-	if (this->idEstado_ < estado.idEstado) return 1;
-	if (this->idEstado_ == estado.idEStado) return 1;
+	if (this->idEstado_ < estado.idEstado_) return 1;
+	if (this->idEstado_ == estado.idEstado_) return 1;
 	return 0;
 }
 

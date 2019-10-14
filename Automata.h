@@ -8,8 +8,8 @@
  * Autor: Basilio Gómez Navarro
  * Correo: alu0101049151@ull.edu.es
  * Fecha 13/10/2019
- * Archivo Estado.h: Clase Estado. Representa un estado de un autómata finito.
- *                   Este fichero contiene la definición de la clase.
+ * Archivo Automata.h: Clase Automata. Representa un autómata finito.
+ *                     Este fichero contiene la definición de la clase.
  *
  * Referencias:
  *                   Enunciado de la prácita:
@@ -18,31 +18,25 @@
  *                   13/10/2019 - Creación (primera versión) del código
  * */
 
-#ifndef PRACTICA4_ESTADO_H
-#define PRACTICA4_ESTADO_H
+#ifndef PRACTICA4_AUTOMATA_H
+#define PRACTICA4_AUTOMATA_H
 
-#include "Transicion.h"
+#include <iostream>
+#include <string>
 
-#include <set>
+#include "Estado.h"
 
-class Estado
+class Automata
 {
 	public:
-		Estado (int idEstado);
-		Estado (const Estado& estado);
-		~Estado ();
+		Automata (int estadoArranque, 
 
-		int getIdEstado () const;
-		std::set<Transicion> getTransiciones () const;
-
-		void insertTransiciones (Transicion transicion);
-
-		int operator< (const Estado& estado) const;
+	protected:
 
 	private:
-		int idEstado_;
-		std::set<Transicion> transiciones_;
-
+		int estadoArranque_;
+		int estadoActual_;
+		std::set<Estado> estados_;
 };
-#endif //PRACTICA4_ESTADO_H
 
+#endif //PRACTICA4_AUTOMATA_H

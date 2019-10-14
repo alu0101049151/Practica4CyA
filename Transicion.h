@@ -33,7 +33,6 @@ class Transicion
 		char getEntrada () const;
 		int getDestino () const;
 
-	protected:
 		int operator< (const Transicion& transicion) const;
 
 	private:

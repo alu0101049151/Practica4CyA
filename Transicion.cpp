@@ -46,7 +46,7 @@ int Transicion::getDestino () const
 }
 
 
-int operator< (const Transicion& transicion) const
+int Transicion::operator< (const Transicion& transicion) const
 {
 	if (this->entrada_ < transicion.entrada_) return 1;
 	if (this->entrada_ == transicion.entrada_ && this->destino_ < transicion.destino_) return 1;
