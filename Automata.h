@@ -23,20 +23,35 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <sstream>
 
 #include "Estado.h"
+
+
+//CONSTANTES
+const char NEWLINE = '\n';
+
 
 class Automata
 {
 	public:
-		Automata (int estadoArranque, 
+		Automata (int estadoArranque, int numeroEstados, std::string& ficheroEntrada);
+		~Automata ();
+
+		int getNumeroEstados () const;
+		int getEstadoArranque () const;
+		
+		void insertEstados (Estado estado);
 
 	protected:
 
+		void leeAutomata(std::string& ficheroEntrada);
+
 	private:
-		int estadoArranque_;
-		int estadoActual_;
-		std::set<Estado> estados_;
+		int numeroEstados_;
+		int estadoArranque_;        
+		std::set<Estado> estados_;   // Conjunto de estados del autómata.
 };
 
 #endif //PRACTICA4_AUTOMATA_H

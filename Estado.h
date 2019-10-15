@@ -28,11 +28,13 @@
 class Estado
 {
 	public:
-		Estado (int idEstado);
+		Estado (int idEstado, bool aceptacion);
+		Estado (int idEStado);
 		Estado (const Estado& estado);
 		~Estado ();
 
 		int getIdEstado () const;
+		bool getAceptacion ();
 		std::set<Transicion> getTransiciones () const;
 
 		void insertTransiciones (Transicion transicion);
@@ -40,8 +42,10 @@ class Estado
 		int operator< (const Estado& estado) const;
 
 	private:
-		int idEstado_;
-		std::set<Transicion> transiciones_;
+		int idEstado_;                        //Es el la etiqueta numérica utilizada para identificar el estado.
+		int numeroTransiciones_;//????? hace falta realmente??
+		bool aceptacion_;                     // Indica si el estado es de aceptación o no.
+		std::set<Transicion> transiciones_;   // Conjunto de tranciones de el estado. 
 
 };
 #endif //PRACTICA4_ESTADO_H

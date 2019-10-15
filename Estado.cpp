@@ -21,12 +21,19 @@
 #include "Estado.h"
 
 
+Estado::Estado (int idEstado, bool aceptacion):
+	idEstado_(idEstado),
+	aceptacion_(aceptacion){}
+
+
 Estado::Estado (int idEstado):
 	idEstado_(idEstado){}
 
 
 Estado::Estado (const Estado& estado):
-	idEstado_(estado.idEstado_){}
+	idEstado_(estado.idEstado_),
+  aceptacion_(estado.aceptacion_),
+  transiciones_(estado.transiciones_){}
 
 
 Estado::~Estado (){}
@@ -36,6 +43,13 @@ int Estado::getIdEstado () const
 {
 	return idEstado_;
 }
+
+
+bool Estado::getAceptacion () 
+{
+	return aceptacion_;
+}
+
 
 std::set<Transicion> Estado::getTransiciones () const
 {
