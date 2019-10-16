@@ -64,27 +64,47 @@ void Eliminador::eliminar (std::string& ficheroEntrada, std::string& ficheroSali
 
 void Eliminador::analiza (char aAnalizar, std::ostream& os)
 {
-	bool estadoEncontrado = false;              // Variable para controlar si se ha encontrado el estado buscado.
-	bool transicionEncontrada = false;         // Variable para controlar si se ha encontrado la transicion.
 	char transformado;
+	bool estadoEncontrado = false;
+	bool auxAceptacion;
+
+	std::cout << "----A transformar: " << aAnalizar << NEWLINE;
 
 	transformado = transforma(aAnalizar);
+	std::cout << "----Transformado: " << transformado << NEWLINE;
 
 	for (auto i: automata_.getEstados()) {
-		std::cout << "Id estado: " <<  i.getIdEstado() << NEWLINE;
-		std::cout << "Estado actual: " << automata_.getEstadoActual() << NEWLINE;
-		if (i.getIdEstado() == automata_.getEstadoActual()) {
-		  for (auto j: i.getTransiciones()) {
-				  if ((j.getEntrada() == transformado) && !transicionEncontrada) {
-					  transicionEncontrada = true;
-						if (i.getAceptacion())
-							os << aAnalizar;
-					  automata_.setEstadoActual(j.getDestino());
-					  std::cout << "Esta imprimiendo analizar: " << aAnalizar << NEWLINE;
-				  }
-		  }
-		}	
-		transicionEncontrada = false;
+
+		std::cout << "Estado i: " << i.getIdEstado() << NEWLINE;
+		std::cout << "Estado Actual: " << automata_.getEstadoActual() << NEWLINE;
+
+		if ((automata_.getEstadoActual() == i.getIdEstado()) && !estadoEncontrado){
+			estadoEncontrado = true;
+			
+			for (auto j: i.getTransiciones()) {
+
+				std::cout << "Entrada de la transicion j: " << j.getEntrada() << NEWLINE;
+
+				if (transformado == j.getEntrada()) {
+					automata_.setEstadoActual(j.getDestino());
+
+					std::cout << "Nuevo estado actual: " << automata_.getEstadoActual() << NEWLINE;
+
+					for (auto k: automata_.getEstados()) {
+						if (k.getIdEstado() == automata_.getEstadoActual())
+							auxAceptacion = k.getAceptacion();
+					}
+
+
+					//std::cout << "Estado del iterador: " << k.getIdEstado() << NEWLINE;
+
+					std::cout << "Aceptación del estado actual: " << auxAceptacion << NEWLINE;
+
+					if (auxAceptacion && i.getIdEstado() != 4)
+						os << aAnalizar;
+				}
+			}
+		}
 	}
 }
 
@@ -98,7 +118,7 @@ char Eliminador::transforma (char aAnalizar)
 			  if (automata_.getEstadoActual() == 5 || automata_.getEstadoActual() == 2 || automata_.getEstadoActual() == 3)
 			    return '$';
 			  else
-				  return '/';
+				  return aAnalizar;
 			  break;
 			}
 		case '*':
@@ -120,7 +140,7 @@ char Eliminador::transforma (char aAnalizar)
 		case '\n':
 			{
 				if (automata_.getEstadoActual() == 2)
-					return aAnalizar;
+					return '%';
 				else
 					return '$';
 				break;

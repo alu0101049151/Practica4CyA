@@ -125,11 +125,8 @@ void Automata::leeAutomata (std::string& ficheroEntrada)
 					iss >> auxString;
 					std::cout << "String " << auxString << NEWLINE;
 
-					if (auxString[0] == '\\' && auxString[1] == 'n' )
-					{
-						std::cout << "Ha entrado en el if " << NEWLINE;
+					if (auxString == "\n")
 						auxEntrada = '\n';
-					}
 					else
 					  auxEntrada = auxString[0];	
 					std::cout << "Entrada: " << auxEntrada << NEWLINE;

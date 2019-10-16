@@ -34,7 +34,7 @@ class Estado
 		~Estado ();
 
 		int getIdEstado () const;
-		bool getAceptacion ();
+		bool getAceptacion () const;
 		std::set<Transicion> getTransiciones () const;
 
 		void insertTransiciones (Transicion transicion);

@@ -45,7 +45,7 @@ int Estado::getIdEstado () const
 }
 
 
-bool Estado::getAceptacion () 
+bool Estado::getAceptacion () const 
 {
 	return aceptacion_;
 }
