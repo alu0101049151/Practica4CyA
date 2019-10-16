@@ -22,12 +22,13 @@
 #include "Automata.h"
 
 
-Automata::Automata (int estadoArranque, int numeroEstados, std::string& ficheroEntrada):
-	estadoArranque_(estadoArranque),
-	numeroEstados_(numeroEstados)
+Automata::Automata (std::string& ficheroEntrada)
 {
 	leeAutomata (ficheroEntrada);
 }
+
+
+Automata::Automata () {}
 
 
 Automata::~Automata (){}
@@ -42,6 +43,24 @@ int Automata::getNumeroEstados () const
 int Automata::getEstadoArranque () const
 {
 	return estadoArranque_;
+}
+
+
+std::set<Estado> Automata::getEstados () const
+{
+	return estados_;
+}
+
+
+int Automata::getEstadoActual () const
+{
+	return estadoActual_;
+}
+
+
+void Automata::setEstadoActual (int nuevoEstado)
+{
+	estadoActual_ = nuevoEstado;
 }
 
 
@@ -84,42 +103,53 @@ void Automata::leeAutomata (std::string& ficheroEntrada)
 			std::stringstream iss(leido);
 
 			iss >> auxString;    // Lectura del identificador numérico del estado.
-      std::cout << "Identificador auxiliar del estado: " << auxString << NEWLINE;
-			auxId = stoi(auxString);
-			auxString.clear();
+			if (!auxString.empty()) {
+      	std::cout << "Identificador auxiliar del estado: " << auxString << NEWLINE;
+				auxId = stoi(auxString);
+				auxString.clear();
 
-			iss >> auxString;   // Lectura de la etiqueta de aceptación del etado.
-			std::cout << "Identificador de aceptación: " << auxString << NEWLINE;
-			auxAceptacion = stoi(auxString);
-			auxString.clear();
+				iss >> auxString;   // Lectura de la etiqueta de aceptación del etado.
+				std::cout << "Identificador de aceptación: " << auxString << NEWLINE;
+				auxAceptacion = stoi(auxString);
+				auxString.clear();
 
-			iss >> auxString;   // Lectura del número de transiciones de un estado.
-			std::cout << "Numero de transiciones del estado: " << auxString << NEWLINE;
-			numeroTransiciones = stoi(auxString);
-			auxString.clear();
+				iss >> auxString;   // Lectura del número de transiciones de un estado.
+				std::cout << "Numero de transiciones del estado: " << auxString << NEWLINE;
+				numeroTransiciones = stoi(auxString);
+				auxString.clear();
 
-			Estado auxEstado(auxId, auxAceptacion);
+				Estado auxEstado(auxId, auxAceptacion);
 
-			for (int i = 0; i < numeroTransiciones; ++i) {
+				for (int i = 0; i < numeroTransiciones; ++i) {
 				
-				iss >> auxString;
-				std::cout << "Entrada: " << auxString << NEWLINE;
-				auxEntrada = auxString[0];
-				auxString.clear();
+					iss >> auxString;
+					std::cout << "Entrada: " << auxString << NEWLINE;
+					auxEntrada = auxString[0];
+					auxString.clear();
 
-				iss >> auxString;
-				std::cout << "Destino: " << auxString << NEWLINE;
-				auxDestino = stoi(auxString);
-				auxString.clear();
+					iss >> auxString;
+					std::cout << "Destino: " << auxString << NEWLINE;
+					auxDestino = stoi(auxString);
+					auxString.clear();
 
-				Transicion auxTransicion(auxEntrada, auxDestino);
-				auxEstado.insertTransiciones(auxTransicion);
+					Transicion auxTransicion(auxEntrada, auxDestino);
+					auxEstado.insertTransiciones(auxTransicion);
 			
-			}
+				}
 
-			estados_.insert(auxEstado);  // Llenado del conjunto de estados del autómata.
-			leido.clear();
-		}
-	}
+		      estados_.insert(auxEstado);  // Llenado del conjunto de estados del autómata.
+			    leido.clear();
+		  }
+	  }
+  }
 }
 
+
+void Automata::writeAutomata (std::ostream& os) const
+{
+	os << numeroEstados_ << NEWLINE;
+	os << estadoArranque_ << NEWLINE;
+
+	for (auto i: estados_) {
+	}
+}

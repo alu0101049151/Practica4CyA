@@ -36,20 +36,27 @@ const char NEWLINE = '\n';
 class Automata
 {
 	public:
-		Automata (int estadoArranque, int numeroEstados, std::string& ficheroEntrada);
+		Automata (std::string& ficheroEntrada);
+		Automata ();
 		~Automata ();
 
 		int getNumeroEstados () const;
 		int getEstadoArranque () const;
+		int getEstadoActual () const;
+		std::set<Estado> getEstados () const;
+		
+		void setEstadoActual (int nuevoEstado);
 		
 		void insertEstados (Estado estado);
+		void writeAutomata (std::ostream& os) const;
 
 	protected:
-
+		// Lee el autómata del fichero de entrada.
 		void leeAutomata(std::string& ficheroEntrada);
 
 	private:
-		int numeroEstados_;
+		int numeroEstados_; // ??????????? Es necesario?
+		int estadoActual_;
 		int estadoArranque_;        
 		std::set<Estado> estados_;   // Conjunto de estados del autómata.
 };
